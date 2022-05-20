@@ -12,7 +12,8 @@ INCLUDE_DIRECTORIES(${GMP_INCLUDE_DIR})
 
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (SIQRS "SIQRS.cpp" "SIQRS.h" "FiniteField.h" "Curve.h" "GmpTest.cc" "GmpTest.h")
+file(GLOB SIQRS_SRC ${PROJECT_SOURCE_DIR}/*.cpp ${PROJECT_SOURCE_DIR}/*.cc ${PROJECT_SOURCE_DIR}/*.h)
+add_executable (SIQRS ${SIQRS_SRC})
 target_link_libraries(SIQRS ${GMP_LIBRARIES})
 
 

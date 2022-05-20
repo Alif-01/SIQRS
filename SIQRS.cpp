@@ -1,11 +1,11 @@
 ﻿#include "SIQRS.h"
-#include "GmpTest.h"
+#include "RunAllTests.h"
 
 using namespace std;
 
 int main()
 {
 	cout << "Hello CMake." << endl;
-    GmpTest();
+    RunAllTests();
 	return 0;
 }
