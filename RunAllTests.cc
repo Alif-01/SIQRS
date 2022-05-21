@@ -4,7 +4,9 @@
 
 #include "RunAllTests.h"
 #include "GmpTest.h"
+#include "FiniteFieldTest.h"
 
 void RunAllTests() {
   GmpTest();
+  FiniteFieldTest();
 }

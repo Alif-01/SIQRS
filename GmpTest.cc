@@ -23,5 +23,5 @@ void GmpTest() {
   printf("b = %s\n", str_b);
   printf("a + b = %s\n", str_sum);
   printf("a * b = %s\n", str_mul);
-  printf("--------- GMP TEST SUCCESS ---------\n");
+  printf("--------- GMP TEST PASSED ---------\n");
 }
