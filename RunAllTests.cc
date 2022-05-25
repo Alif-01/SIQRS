@@ -5,8 +5,10 @@
 #include "RunAllTests.h"
 #include "GmpTest.h"
 #include "FiniteFieldTest.h"
+#include "CurveTest.h"
 
 void RunAllTests() {
   GmpTest();
   FiniteFieldTest();
+  CurveTest();
 }

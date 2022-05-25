@@ -5,7 +5,10 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	cout << "Hello SIQRS." << endl;
+#ifdef DEBUG
+	cout << "DEBUG on." << endl;
+#endif
     RunAllTests();
 	return 0;
 }
