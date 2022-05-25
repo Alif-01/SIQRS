@@ -63,7 +63,11 @@ int cmp(const Integer &a, const Integer &b);
 
 class Fp {
  public:
-  Fp(Integer v, Integer p): v_{v}, p_{p} {}
+  Fp(Integer v, Integer p): v_{v}, p_{p} {
+#ifdef DEBUG
+    assert(cmp(p%4, 3) == 0);
+#endif
+  }
   ~Fp() = default;
 
   friend Fp operator-(const Fp &a);
@@ -78,12 +82,19 @@ class Fp {
   Fp inv() const{
     return Fp{::inv(v_, p_), p_};
   }
+
+  Fp sqrt() const {
+    return *this;
+  }
+
   Integer get_v() const {
     return v_;
   }
+
   Integer get_p() const {
     return p_;
   }
+
   std::string to_string() {
     return v_.to_string() + " ( mod " + p_.to_string() + " )";
   }

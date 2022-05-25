@@ -4,6 +4,7 @@
 
 #include "FiniteField.h"
 #include <sstream>
+#include <iostream>
 #include <cassert>
 
 // Weierstrass curve
@@ -18,6 +19,10 @@ public:
 
     friend bool operator==(const Curve& a, const Curve& b) {
         return a.A_ == b.A_ && a.B_ == b.B_;
+    }
+
+    bool contain(Fp2 x, Fp2 y) {
+        return y*y == x*x*x + A_ * x + B_;
     }
 
     Fp2 A() const { return A_; }
@@ -70,13 +75,13 @@ public:
         if (!x.get_y().zero()) ss << " + " << x.get_y().get_v().to_string() << "i";
         ss << ", " << y.get_x().get_v().to_string();
         if (!y.get_y().zero()) ss << " + " << y.get_y().get_v().to_string() << "i";
-        ss << ") mod " + x.get_x().get_p().to_string();
+        ss << ")";
         return ss.str();
     }
 
 private:
     Fp2 x_, y_, z_;
-    const Curve& curve_;
+    Curve curve_;
 
     bool verify() {
         Fp2 lhs = y_ * y_ * z_;
