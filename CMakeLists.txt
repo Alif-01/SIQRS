@@ -1,7 +1,4 @@
-﻿# CMakeList.txt: SIQRS 的 CMake 项目，在此处包括源代码并定义
-# 项目特定的逻辑。
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
 project ("SIQRS")
 
@@ -11,10 +8,8 @@ find_package(GMP REQUIRED)
 INCLUDE_DIRECTORIES(${GMP_INCLUDE_DIR})
 
 
-# 将源代码添加到此项目的可执行文件。
 file(GLOB SIQRS_SRC ${PROJECT_SOURCE_DIR}/*.cpp ${PROJECT_SOURCE_DIR}/*.cc ${PROJECT_SOURCE_DIR}/*.h)
 add_executable (SIQRS ${SIQRS_SRC})
 target_link_libraries(SIQRS ${GMP_LIBRARIES})
 
-
-# TODO: 如有需要，请添加测试并安装目标。
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -DDEBUG")
