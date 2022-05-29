@@ -17,16 +17,20 @@ void FiniteFieldTest() {
   Fp diff_a_b(10, p);
   Fp prod_a_b(1, p);
   Fp quot_a_b(9, p);
+  Fp sqrt_a(5, p);
   assert(a + b == sum_a_b);
   assert(a - b == diff_a_b);
   assert(a * b == prod_a_b);
   assert(a / b == quot_a_b);
+  auto pair_a = a.sqrt();
+  assert(pair_a.first && (pair_a.second == sqrt_a || -pair_a.second == sqrt_a));
   printf("a = %s\n", a.to_string().c_str());
   printf("b = %s\n", b.to_string().c_str());
   printf("a + b = %s\n", (a + b).to_string().c_str());
   printf("a - b = %s\n", (a - b).to_string().c_str());
   printf("a * b = %s\n", (a * b).to_string().c_str());
   printf("a / b = %s\n", (a / b).to_string().c_str());
+  printf("sqrt(a) = %s\n", pair_a.second.to_string().c_str());
 
   // Fp2
   Fp2 c(1, 2, p);
@@ -35,16 +39,20 @@ void FiniteFieldTest() {
   Fp2 diff_c_d(9, 9, p);
   Fp2 prod_c_d(6, 10, p);
   Fp2 quot_c_d(0, 8, p);
+  Fp2 sqrt_c(2, 6, p);
   assert(c + d == sum_c_d);
   assert(c - d == diff_c_d);
   assert(c * d == prod_c_d);
   assert(c / d == quot_c_d);
+  auto pair_c = c.sqrt();
+  assert(pair_c.first && (pair_c.second == sqrt_c || pair_c.second == -sqrt_c));
   printf("c = %s\n", c.to_string().c_str());
   printf("d = %s\n", d.to_string().c_str());
   printf("c + d = %s\n", (c + d).to_string().c_str());
   printf("c - d = %s\n", (c - d).to_string().c_str());
   printf("c * d = %s\n", (c * d).to_string().c_str());
   printf("c / d = %s\n", (c / d).to_string().c_str());
+  printf("sqrt(c) = %s\n", pair_c.second.to_string().c_str());
 
   printf("--------- Finite Field Test Passed ---------\n");
 }

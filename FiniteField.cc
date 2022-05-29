@@ -101,6 +101,10 @@ bool operator==(const Fp &a, const Fp &b) {
 
 // Fp2
 
+Fp2 operator-(const Fp2 &a) {
+  return Fp2{-a.x_, -a.y_};
+}
+
 Fp2 operator+(const Fp2 &a, const Fp2 &b) {
   return Fp2{a.x_ + b.x_, a.y_ + b.y_};
 }
