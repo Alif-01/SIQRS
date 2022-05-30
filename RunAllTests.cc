@@ -9,6 +9,7 @@
 
 void RunAllTests() {
   GmpTest();
+  IntegerTest();
   FiniteFieldTest();
   CurveTest();
 }

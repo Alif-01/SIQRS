@@ -32,15 +32,35 @@ Integer operator%(const Integer &a, const Integer &b) {
   return r;
 }
 
+bool operator==(const Integer &a, const Integer &b) {
+  return cmp(a, b) == 0;
+}
+
 Integer inv(const Integer &a, const Integer &b) {
   Integer res;
   mpz_invert(res.v_, a.v_, b.v_);
   return res;
 }
 
+Integer pow(const Integer &base, unsigned int exp) {
+  Integer res;
+  mpz_pow_ui(res.v_, base.v_, exp);
+  return res;
+}
+
+Integer powm(const Integer &base, const Integer &exp, const Integer &mod) {
+  Integer res;
+  mpz_powm(res.v_, base.v_, exp.v_, mod.v_);
+  return res;
+}
+
 int cmp(const Integer &a, const Integer &b) {
   return mpz_cmp(a.v_, b.v_);
 }
+
+// PRNG
+
+PRNG PRNG::prng;
 
 // Fp
 

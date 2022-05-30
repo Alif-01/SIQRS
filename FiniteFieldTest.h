@@ -7,4 +7,6 @@
 
 void FiniteFieldTest();
 
+void IntegerTest();
+
 #endif //SIQRS__FINITEFIELDTEST_H_

@@ -4,6 +4,7 @@
 
 #include "FiniteFieldTest.h"
 #include "FiniteField.h"
+#include "Parameters.h"
 
 void FiniteFieldTest() {
   printf("--------- Finite Field Test ---------\n");
@@ -55,4 +56,32 @@ void FiniteFieldTest() {
   printf("sqrt(c) = %s\n", pair_c.second.to_string().c_str());
 
   printf("--------- Finite Field Test Passed ---------\n");
+}
+
+void IntegerTest() {
+  printf("--------- Integer Test ---------\n");
+  Integer pow_2_3 = pow(2, 3);
+  Integer pow_3_4 = pow(3, 4);
+  Integer powm_2_3_5 = powm(2, 3, 5);
+  Integer int_3 {3};
+  Integer int_8 {8};
+  Integer int_81 {81};
+  assert(pow_2_3 == int_8);
+  assert(pow_3_4 == int_81);
+  assert(powm_2_3_5 == int_3);
+
+  printf("2 ^ 3 = %s\n", pow_2_3.to_string().c_str());
+  printf("3 ^ 4 = %s\n", pow_3_4.to_string().c_str());
+  printf("2 ^ 3 mod 5 = %s\n", powm_2_3_5.to_string().c_str());
+
+  assert(SIDH_P % 4 == 3);
+  printf("SIDH_P = %s\n", SIDH_P.to_string().c_str());
+  printf("--------- Integer Test Passed ---------\n");
+
+//  printf("random number #1: %s\n", PRNG::prng.random(5).to_string().c_str());
+//  printf("random number #2: %s\n", PRNG::prng.random(5).to_string().c_str());
+//  printf("random number #3: %s\n", PRNG::prng.random(10).to_string().c_str());
+//  printf("random number #4: %s\n", PRNG::prng.random(10).to_string().c_str());
+//  printf("random number #5: %s\n", PRNG::prng.random(SIDH_P).to_string().c_str());
+//  printf("random number #6: %s\n", PRNG::prng.random(SIDH_P).to_string().c_str());
 }

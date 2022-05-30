@@ -41,13 +41,17 @@ class Integer {
   friend Integer operator*(const Integer &a, const Integer &b);
   friend Integer operator*(const Integer &a, const unsigned int &b);
   friend Integer operator%(const Integer &a, const Integer &b);
+  friend bool operator==(const Integer &a, const Integer &b);
   friend Integer inv(const Integer &a, const Integer &b);
+  friend Integer pow(const Integer &base, unsigned int exp);
+  friend Integer powm(const Integer &base, const Integer &exp, const Integer &mod);
   friend int cmp(const Integer &a, const Integer &b);
   friend class Fp;
   friend class Fp2;
+  friend class PRNG;
   friend Fp operator-(const Fp &a);
 
-  std::string to_string() {
+  std::string to_string() const {
     return std::string{mpz_get_str(NULL, 10, v_)};
   }
 
@@ -60,8 +64,35 @@ Integer operator-(const Integer &a, const Integer &b);
 Integer operator*(const Integer &a, const Integer &b);
 Integer operator*(const Integer &a, const unsigned int &b);
 Integer operator%(const Integer &a, const Integer &b);
+bool operator==(const Integer &a, const Integer &b);
 Integer inv(const Integer &a, const Integer &b);
+Integer pow(const Integer &base, unsigned int exp);
+Integer powm(const Integer &base, const Integer &exp, const Integer &mod);
 int cmp(const Integer &a, const Integer &b);
+
+/**
+ * Usage: random_number = PRNG::prng.random(p);
+ */
+class PRNG {
+ public:
+  static PRNG prng;
+  /**
+   * Generate a uniform random integer in the range 0 to n − 1, inclusive.
+   * @param n
+   * @return
+   */
+  Integer random(const Integer &n) {
+    Integer res;
+    mpz_urandomm(res.v_, state_, n.v_);
+    return res;
+  }
+ private:
+  PRNG() {
+    gmp_randinit_default(state_);
+    gmp_randseed_ui(state_, 998244353);
+  }
+  gmp_randstate_t state_;
+};
 
 class Fp {
  public:
@@ -89,9 +120,9 @@ class Fp {
     int legendre = mpz_legendre(this->v_.v_, this->p_.v_);
     if (legendre == 1) {
       Fp res = *this;
-      mpz_t exp;
-      mpz_cdiv_q_ui(exp, this->p_.v_, 4u); // exp = (p+1)/4 = ceil(p/4)
-      mpz_powm(res.v_.v_, this->v_.v_, exp, this->p_.v_);
+      Integer exp;
+      mpz_cdiv_q_ui(exp.v_, this->p_.v_, 4u); // exp = (p+1)/4 = ceil(p/4)
+      mpz_powm(res.v_.v_, this->v_.v_, exp.v_, this->p_.v_);
       return std::make_pair(true, res);
     } else {
       return std::make_pair(false, *this);
