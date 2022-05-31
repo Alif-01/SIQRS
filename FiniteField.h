@@ -63,7 +63,7 @@ int cmp(const Integer &a, const Integer &b);
 
 class Fp {
  public:
-  Fp(Integer v, Integer p): v_{v}, p_{p} {
+  Fp(Integer v=0, Integer p=0): v_{v}, p_{p} {
 #ifdef DEBUG
     assert(cmp(p%4, 3) == 0);
 #endif
@@ -96,7 +96,7 @@ class Fp {
   }
 
   std::string to_string() {
-    return v_.to_string() + " ( mod " + p_.to_string() + " )";
+    return v_.to_string();
   }
 
   bool zero() const{
@@ -120,7 +120,7 @@ bool operator==(const Fp &a, const Fp &b);
 // x + iy
 class Fp2 {
  public:
-  Fp2(Integer x, Integer y, Integer p) : x_{x, p}, y_{y, p} {}
+  Fp2(Integer x=0, Integer y=0, Integer p=0) : x_{x, p}, y_{y, p} {}
   Fp2(Fp x, Fp y) : x_{x}, y_{y} {
 #ifdef DEBUG
     assert(cmp(x.p_, y.p_) == 0);
@@ -160,7 +160,8 @@ class Fp2 {
   }
 
   std::string to_string() const {
-    return x_.get_v().to_string() + " + " + y_.get_v().to_string() + " i ( mod " + x_.get_p().to_string() + " )";
+    if (y_ == Fp(0, y_.p_)) return x_.get_v().to_string();
+    else return "(" + x_.get_v().to_string() + " + " + y_.get_v().to_string() + "i)";
   }
 
   bool zero() const {
