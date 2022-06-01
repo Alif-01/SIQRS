@@ -5,6 +5,7 @@
 #include <cassert>
 #include <string>
 #include <cstdio>
+#include <iostream>
 
 class Fp;
 class Fp2;
@@ -51,7 +52,7 @@ class Integer {
   friend class PRNG;
   friend Fp operator-(const Fp &a);
 
-  std::string to_string() const {
+  std::string str() const {
     return std::string{mpz_get_str(NULL, 10, v_)};
   }
 
@@ -70,35 +71,11 @@ Integer pow(const Integer &base, unsigned int exp);
 Integer powm(const Integer &base, const Integer &exp, const Integer &mod);
 int cmp(const Integer &a, const Integer &b);
 
-/**
- * Usage: random_number = PRNG::prng.random(p);
- */
-class PRNG {
- public:
-  static PRNG prng;
-  /**
-   * Generate a uniform random integer in the range 0 to n − 1, inclusive.
-   * @param n
-   * @return
-   */
-  Integer random(const Integer &n) {
-    Integer res;
-    mpz_urandomm(res.v_, state_, n.v_);
-    return res;
-  }
- private:
-  PRNG() {
-    gmp_randinit_default(state_);
-    gmp_randseed_ui(state_, 998244353);
-  }
-  gmp_randstate_t state_;
-};
-
 class Fp {
  public:
   Fp(Integer v=0, Integer p=0): v_{v}, p_{p} {
 #ifdef DEBUG
-    assert(cmp(p%4, 3) == 0);
+    assert(cmp(p, 0) == 0 || cmp(p%4, 3) == 0);
 #endif
   }
   ~Fp() = default;
@@ -137,8 +114,8 @@ class Fp {
     return p_;
   }
 
-  std::string to_string() {
-    return v_.to_string();
+  std::string str() {
+    return v_.str();
   }
 
   bool zero() const{
@@ -238,9 +215,9 @@ class Fp2 {
     return y_;
   }
 
-  std::string to_string() const {
-    if (y_ == Fp(0, y_.p_)) return x_.get_v().to_string();
-    else return "(" + x_.get_v().to_string() + " + " + y_.get_v().to_string() + "i)";
+  std::string str() const {
+    if (y_ == Fp(0, y_.p_)) return x_.get_v().str();
+    else return "(" + x_.get_v().str() + " + " + y_.get_v().str() + "i)";
   }
 
   bool zero() const {
@@ -259,3 +236,35 @@ Fp2 operator*(const Fp2 &a, const Fp2 &b);
 Fp2 operator*(const Fp2 &a, const unsigned int &b);
 Fp2 operator/(const Fp2 &a, const Fp2 &b);
 bool operator==(const Fp2 &a, const Fp2 &b);
+
+/**
+ * Usage: random_number = PRNG::prng.random(p);
+ */
+class PRNG {
+ public:
+  static PRNG prng;
+  /**
+   * Generate a uniform random integer in the range 0 to n − 1, inclusive.
+   * @param n
+   * @return
+   */
+  Integer random(const Integer &n) {
+    Integer res;
+    mpz_urandomm(res.v_, state_, n.v_);
+    return res;
+  }
+
+  Fp random_fp(const Integer &p) {
+    return Fp{random(p), p};
+  }
+
+  Fp2 random_fp2(const Integer &p) {
+    return Fp2{random(p), random(p), p};
+  }
+ private:
+  PRNG() {
+    gmp_randinit_default(state_);
+    gmp_randseed_ui(state_, 998244353);
+  }
+  gmp_randstate_t state_;
+};

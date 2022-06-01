@@ -6,10 +6,12 @@
 #include "GmpTest.h"
 #include "FiniteFieldTest.h"
 #include "CurveTest.h"
+#include "IsogenyTest.h"
 
 void RunAllTests() {
-  GmpTest();
-  IntegerTest();
-  FiniteFieldTest();
-  CurveTest();
+  // GmpTest();
+  // IntegerTest();
+  // FiniteFieldTest();
+  // CurveTest();
+  IsogenyTest();
 }
