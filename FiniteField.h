@@ -56,6 +56,10 @@ class Integer {
     return std::string{mpz_get_str(NULL, 10, v_)};
   }
 
+  std::string str_2() const {
+    return std::string{mpz_get_str(NULL, 2, v_)};
+  }
+
  private:
   mpz_t v_;
 };

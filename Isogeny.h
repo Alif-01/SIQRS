@@ -155,6 +155,10 @@ public:
         return curves[k];
     }
 
+    Curve e1() const {
+        return get_curve(dk);
+    }
+
 private:
     vector<Curve> curves;
     vector<Isogeny> isogenies;

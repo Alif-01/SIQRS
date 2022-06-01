@@ -20,7 +20,7 @@ vector<RPoint> get_rpoints(const Curve& c) {
     return rpoints;
 }
 
-void test_isogeny(const Curve& c, const RPoint& g, const vector<RPoint>& pts) {
+void test_isogeny(const Curve& c, const RPoint& g) {
     cout << "Now testing isogeny: {" + c.str()+"} / <"+g.str()+">" << endl;
     Isogeny phi(c, g);
     Curve d = phi.e1();
@@ -28,15 +28,15 @@ void test_isogeny(const Curve& c, const RPoint& g, const vector<RPoint>& pts) {
     assert(phi.map(g) == zero(d));
     assert(phi.map(g+g) == zero(d));
     cout << "kernel correct" << endl;
-    int k = 100;
+    int k = 10;
     while(k--) {
-        auto p = pts[rand()%pts.size()], q = pts[rand()%pts.size()];
+        auto p = random_point(c), q = random_point(c);
         assert(phi.map(p+q) == phi.map(p)+phi.map(q));
     }
     cout << "homomorphism correct" << endl;
 }
 
-void test_isogeny_chain(const Curve& c, const RPoint& g, const vector<RPoint>& pts, int l, int k) {
+void test_isogeny_chain(const Curve& c, const RPoint& g, int l, int k) {
     cout << "Now testing isogeny chain: {" + c.str()+"} / <"+g.str()+">" << ", |g|=" << l << "^" << k << endl;
     IsogenyChain chain(c, g, l, k);
     auto d = chain.get_curve(k);
@@ -45,15 +45,23 @@ void test_isogeny_chain(const Curve& c, const RPoint& g, const vector<RPoint>& p
     cout << "kernel correct" << endl;
     int K = 10;
     while(K--) {
-        auto p = pts[rand()%pts.size()], q = pts[rand()%pts.size()];
+        auto p = random_point(c), q = random_point(c);
         assert(chain.map(p+q) == chain.map(p)+chain.map(q));
     }
     cout << "homomorphism correct" << endl;
 }
 
+void test_large() {
+    auto P = SIDH_P;
+    Curve c{Fp2(1, 0, P), Fp2(0, 0, P), Fp2(1, 0, P)};
+    auto p0 = random_point(c);
+    auto p1 = p0.pow3(K3);
+    test_isogeny_chain(c, p1, 2, K2);
+}
+
 void IsogenyTest() {
     printf("--------- Isogeny Test ---------\n");
-    auto P = 23;
+    auto P = 11;
     cout << "Isogeny test on p = " << P << endl;
     Fp2 d = PRNG::prng.random_fp2(P);
     Curve c{Fp2(1, 0, P)*d, Fp2(0, 0, P)*d, d};
@@ -63,17 +71,18 @@ void IsogenyTest() {
     for(auto p : rpoints) {
         int o = order(p);
         if (o == 2) {
-            test_isogeny_chain(c, p, rpoints, 2, 1);
+            test_isogeny_chain(c, p, 2, 1);
         }
         if (o == 4) {
-            test_isogeny_chain(c, p, rpoints, 2, 2);
+            test_isogeny_chain(c, p, 2, 2);
         }
         if (o == 8) {
-            test_isogeny_chain(c, p, rpoints, 2, 3);
+            test_isogeny_chain(c, p, 2, 3);
         }
         if (o == 3) {
-            test_isogeny_chain(c, p, rpoints, 3, 1);
+            test_isogeny_chain(c, p, 3, 1);
         }
     }
+    test_large();
     printf("--------- Isogeny Test Passed ---------\n");
 }

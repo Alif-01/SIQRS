@@ -55,13 +55,43 @@ RPoint operator*(const RPoint& p, int k) {
     return s;
 }
 
+RPoint operator*(const RPoint& p, Integer k) {
+    auto str = k.str_2();
+    RPoint s = zero(p.curve_), t = p;
+    for (int i=str.length()-1; i>=0; i--) {
+        if (str[i] == '1') s = s + t;
+        t = t + t;
+    }
+    return s;
+}
+
+RPoint RPoint::pow2(int k) const {
+    RPoint t(*this);
+    for (int i=0; i<k; i++) t = t+t;
+    return t;
+}
+
+RPoint RPoint::pow3(int k) const {
+    RPoint t(*this);
+    for (int i=0; i<k; i++) t = t+t+t;
+    return t;
+}
+
 RPoint zero(const Curve& curve) {
     auto p = curve.A().get_x().get_p();
     return RPoint{Fp2(0, 0, p), Fp2(1, 0, p), Fp2(0, 0, p), curve};
 }
 
 RPoint random_point(const Curve& curve) {
+    auto c1 = curve.normalize();
     while(1) {
+        Fp2 x = PRNG::prng.random_fp2(c1.A().get_x().get_p());
+        auto y = c1.eval(x).sqrt();
+        if (y.first) {
+            Fp2 z(1, 0, c1.A().get_x().get_p());
+            if (cmp(PRNG::prng.random(2), 0)) return RPoint(x, y.second, z, c1);
+            else return RPoint(x, -y.second, z, c1);
+        }
     }
 }
 

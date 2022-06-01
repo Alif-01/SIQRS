@@ -31,7 +31,8 @@ public:
     }
 
     Fp2 eval(Fp2 x) const {
-        return x*x*x + A_/C_ * x + B_/C_;
+        if (C_ == Fp2(1, 0, C_.get_x().get_p())) return x*x*x + A_ * x + B_;
+        else return x*x*x + A_/C_ * x + B_/C_;
     }
 
     Fp2 j_inv() const {
@@ -83,6 +84,10 @@ public:
     friend bool operator==(const RPoint& p, const RPoint& q);
     friend RPoint operator+(const RPoint& p, const RPoint& q);
     friend RPoint operator*(const RPoint& p, int k);
+    friend RPoint operator*(const RPoint& p, Integer k);
+
+    RPoint pow2(int k) const;
+    RPoint pow3(int k) const;
 
     RPoint& operator=(const RPoint& p) {
         x_ = p.x_; y_ = p.y_; z_ = p.z_;
