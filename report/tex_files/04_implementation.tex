@@ -1,1 +1,29 @@
-Write Something Here.
+
+\subsection{Parameter Choices}
+
+Although $p$ can be arbitrary for our protocol, the implementation of the protocol benefits from some special forms of $p$. Choosing $p \equiv -1 \pmod 4$ means that $-1$ is not a square in $\F_{p^2}$ and hence $\F_{p^2} = \F_p(i)$ for $i^2 = -1$, which makes the arithmetic simpler.
+
+In our implementation, we follow \cite{C:CosLonNae16} and choose
+\begin{align*}
+    p = 2^{372} \cdot 3^{239} - 1.
+\end{align*}
+
+\paragraph{TODO} Write something about the balance of $2^{372} \approx 3^{239}$.
+
+\paragraph{TODO} Write something about the choice of the curve and etc.
+
+\subsection{Implementation Details}
+
+We use the GMP library \cite{Granlund12} as our high precision arithmetic library. Based on GMP library, we build up several C++ classes based on our purpose.
+
+\begin{itemize}
+    \item Integer class: we wrap the GMP library into the integer class, which is more convenient to use.
+    \item Fp class: we implement the basic $\F_p$ field using Integer class as well as computing the square root of an element.
+    \item Fp2 class: similar to $\F_p$, we implement the basic $\F_p$ field containing the square root algorithm.
+    \item Curve class:
+    \item RPoint class:
+    \item Isogeny class:
+    \item IsogenyChain class:
+\end{itemize}
+
+\subsection{Experiments}
