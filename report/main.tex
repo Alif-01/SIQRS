@@ -1,0 +1,95 @@
+%
+% Parameters
+%
+
+\ifdefined\fullversion
+\else
+\def\fullversion{1}    % 0 = conference version; 1 = full version
+\fi
+
+\ifdefined\cameraversion
+\else
+\def\cameraversion{0}    % 0 = long version; 1 = proceedings version
+\fi
+
+\def\showoverflow{1}   % 1 = show overflows
+\def\allow{1}      % 0 = remove todo command
+\def\anonymous{1}      % 1 = anonymous
+
+%
+% Document class 
+%
+
+\documentclass[envcountsame,runningheads,notitlepage]{llncs}
+\ifnum\fullversion=1
+\usepackage[a4paper, margin=1.1in]{geometry}
+\setlength{\marginparwidth}{2.5cm}
+\fi
+
+%
+% Custom header
+%
+
+\input{tex_files/ZZ_header}
+
+\title{Insert Title}
+\titlerunning{Insert Running Title}
+\date{}
+
+\ifnum\anonymous=0
+\author{
+  Coauthor Name\inst{1} \and
+  Coauthor Name\inst{2}
+}% Add author name here
+
+\institute{Coauthor University\\
+  \href{mailto:mail@mail.com}{mail@mail.com} \and
+  Coauthor University\\
+  \href{mailto:mail@mail.com}{mail@mail.com}
+}  % Add institute here
+
+\else
+\author{Juntian Zheng \and Zihao Zhen \and Wuwei Yuan} 
+\institute{Tsinghua University}
+\fi
+
+\begin{document}
+  \maketitle
+
+\begin{abstract}
+%Insert abstract here
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+\input{tex_files/01_introduction}
+
+\section{Preliminary}
+\label{sec:preliminary}
+% 写一些椭圆曲线的相关的东西
+\input{tex_files/02_preliminary}
+
+\section{SIDH}
+\label{sec:SIDH}
+% 写一些算法啥的
+\input{tex_files/03_SIDH}
+
+\section{Implementation}
+\label{sec:implementation}
+% 实现方法&实现细节&结果
+\input{tex_files/04_implementation}
+
+\section{Conclusion}
+\label{sec:conclusion}
+\input{tex_files/05_conclusion}
+
+cite example\cite{https://doi.org/10.48550/arxiv.1711.04062}
+
+\ifnum\fullversion=0
+  \bibliographystyle{splncs03}
+ \else
+   \bibliographystyle{alpha-short}
+ \fi
+\bibliography{cryptobib/abbrev3,cryptobib/crypto,add}
+
+\end{document} 
