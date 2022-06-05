@@ -89,6 +89,9 @@ public:
     RPoint pow2(int k) const;
     RPoint pow3(int k) const;
 
+    int order2() const;
+    int order3() const;
+
     RPoint& operator=(const RPoint& p) {
         x_ = p.x_; y_ = p.y_; z_ = p.z_;
         curve_ = p.curve_;

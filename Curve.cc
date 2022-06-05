@@ -77,6 +77,26 @@ RPoint RPoint::pow3(int k) const {
     return t;
 }
 
+int RPoint::order2() const {
+    int k=0;
+    auto p(*this);
+    while(!(p == zero(curve_))) {
+        p = p+p;
+        k++;
+    }
+    return k;
+}
+
+int RPoint::order3() const {
+    int k=0;
+    auto p(*this);
+    while(!(p == zero(curve_))) {
+        p = p+p+p;
+        k++;
+    }
+    return k;
+}
+
 RPoint zero(const Curve& curve) {
     auto p = curve.A().get_x().get_p();
     return RPoint{Fp2(0, 0, p), Fp2(1, 0, p), Fp2(0, 0, p), curve};
