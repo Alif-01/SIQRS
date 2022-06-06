@@ -20,7 +20,7 @@
 % Document class 
 %
 
-\documentclass[envcountsame,runningheads,notitlepage]{llncs}
+\documentclass[envcountsame,runningheads,notitlepage]{article}
 \ifnum\fullversion=1
 \usepackage[a4paper, margin=1.1in]{geometry}
 \setlength{\marginparwidth}{2.5cm}
@@ -31,9 +31,18 @@
 %
 
 \input{tex_files/ZZ_header}
+\usepackage{tikz-cd}
 
-\title{Insert Title}
-\titlerunning{Insert Running Title}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{protocol}[theorem]{Protocol}
+
+
+\title{Supersingular Isogeny Based Quantum-Resistant Key-Exchange Protocol Implemented in C++}
+% \titlerunning{Insert Running Title}
 \date{}
 
 \ifnum\anonymous=0
@@ -50,15 +59,15 @@
 
 \else
 \author{Juntian Zheng \and Zihao Zhen \and Wuwei Yuan} 
-\institute{Tsinghua University}
+% \institute{Tsinghua University}
 \fi
 
 \begin{document}
   \maketitle
 
-\begin{abstract}
-%Insert abstract here
-\end{abstract}
+% \begin{abstract}
+%   \input{tex_files/00_abstract}
+% \end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
@@ -83,7 +92,7 @@
 \label{sec:conclusion}
 \input{tex_files/05_conclusion}
 
-cite example\cite{https://doi.org/10.48550/arxiv.1711.04062}
+% cite example\cite{https://doi.org/10.48550/arxiv.1711.04062}
 
 \ifnum\fullversion=0
   \bibliographystyle{splncs03}

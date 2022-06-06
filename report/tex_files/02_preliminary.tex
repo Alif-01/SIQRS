@@ -1,1 +1,81 @@
-Write Something Here.
+%!TEX root=../main.tex
+
+In this section we will briefly introduce some mathematical concepts, which serve as the foundation of isogeny-based cryptography. The proofs are omitted for simplicity. For a detailed description, please check \cite{Silverman}, \cite{https://doi.org/10.48550/arxiv.1711.04062} and \cite{PQCRYPTO:JaoDeFo11}.
+
+\begin{definition}[Elliptic Curves]
+Let $k$ be a field with characteristic different from $2$ or $3$, and $\overline k$ be its algebraic closure. An \textit{elliptic curve} is the set of points in $\mathbb P^2(\overline k)$ satisfying the equation
+$$
+Y^2Z=X^3+aXZ^2+bZ^3,
+$$
+where $a,b\in k,4a^3+27b^2\ne 0$. Here $\mathbb P^k(\overline k)$ is the $2$-dimensional projective space on $\overline k$, i.e., the set
+$$
+\{(X:Y:Z)\mid X,Y,Z\in\overline k,(X,Y,Z)\ne(0,0,0)\}
+$$
+modulo the equivalence relation
+$$
+(X:Y:Z)\sim(X':Y':Z')\Leftrightarrow \exists \lambda\in\overline k,X=\lambda X',Y=\lambda Y',Z=\lambda Z'.
+$$
+
+\end{definition}
+
+
+A more convenient representation of elliptic curves is the affine form
+$$
+y^2=x^3+ax+b,
+$$
+which is just the dehomogenization of the definition above. Under this representation, an elliptic curve consists of the solutions of such an equation, together with a point at infinity $\mathcal O=(0:1:0)$.
+
+For any elliptic curve $E$ defined as above, the Bezout's theorem tells us that any line in $\mathbb P^2(\overline k)$ will intersect $E$ in exactly three points (including multiplicity). Therefore, for any two points $P,Q\in E$, we can find another point $R\in E$ that $P,Q,R$ are colinear, and then define the addition rule on the elliptic curve by
+$$
+P+Q+R=\mathcal{O},
+$$
+
+It can be verified that this gives a abelian group structure over the curve.
+
+\begin{definition}[Rational Points] The \textit{rational points} of an elliptive curve $E$ is the set
+$$
+E(k)=\{(X:Y:Z)\in E\mid X,Y,Z\in k\}
+$$
+of points that have coordinates defined in $k$. The rational points form a subgroup of the whole curve.
+
+\end{definition}
+
+\begin{definition}[Isomorphism \& j-Invariant] We can define the \textit{algebraic maps} between elliptic curves as the homogeneous rational functions on their coordinates. An \textit{isomorphism} between two curves is an invertible algebraic map. Two curves are isomorphic if and only if they have the same \textit{j-invariant}
+$$
+j(E)=1728\frac{4a^3}{4a^3+27b^2}.
+$$
+\end{definition}
+
+\begin{definition}[Isogeny] An \textit{isogeny} is a surjective algebraic map between two curves that also keeps their group structures, i.e., it is a group homomorphism. For simplicity we only consider the separable mappings here. Furthermore, we have the following equivalent conditions for isogenies:
+\begin{enumerate}
+    \item Algebraic map $\varphi:E\to E'$ is a surjective group homomorphism.
+    \item Algebraic map $\varphi:E\to E'$ is a group homomorphism with finite kernel.
+    \item Algebraic map $\varphi:E\to E'$ is non-constant and sends the point at infinity $\mathcal O$ to $\mathcal O'$.
+\end{enumerate}
+\end{definition}
+
+For any isogeny $\varphi:E\to E'$, we know that $\ker \varphi$ is always finite, and we can define its degree $\deg \varphi$ as $|\ker \varphi|$. For any isogeny $\varphi: E\to E'$ with $\deg\varphi=l$, there exists a \textit{dual isogeny} $\psi:E'\to E$ that $\deg\psi=l$ and
+$$
+\psi\circ\varphi=[l]_E,\varphi\circ\psi=[l]_{E'},
+$$
+in which $[l]_E$ means scalar multiplication by $l$. Furthermore, the composition of two isogenies $\varphi:E\to E'$ and $\psi:E'\to E''$ is still an isogeny, with $\deg(\psi\circ\varphi)=\deg \psi\cdot\deg\varphi$. This shows that the isogenies of some certain degree actually give an equivalent relationship between elliptic curves over a fixed field.
+
+\begin{proposition}[Isogeny from Kernel] 
+Given an elliptic curve $E$ and a finite subgroup $\Phi$ of $E$, there is a unique pair $(E',\varphi)$ that $\varphi:E\to E'$ is an isogeny with kernel $\Phi$. The uniqueness here is up to isomorphisms on $E'$.
+\end{proposition}
+
+\begin{definition}[Supersingular \& Ordinary Curves] We can separate all curves defined over some finite field $\mathbb F_q$ into two classes by the structures of their endomorphism ring $\text{End}(E)$, which is the set of all isogenies from $E$ to itself. For any curve $E$, its endomorphism ring $\text{End}(E)$ can be in one of the following forms:
+\begin{enumerate}
+    \item An order in an imaginary quadratic field. These curves are called ordinary curves.
+    \item An order in a quaternion algebra. These curves are called supersingular curves.
+\end{enumerate}
+\end{definition}
+
+We will mainly focus on the supersingular curves in this project. The supersingular curves have a bunch of nice properties, especially the simple structure of abelian group and isogeny graph.
+
+\begin{proposition}[Group Structure of Supersingular Curves] All supersingular curves are defined over $\mathbb F_{p^2}$ for some prime $p$. Given prime $p$ and $q=p^2$, most of the supersingular curves defined over $\mathbb F_q$ (except for some special cases with $j(E)=0$ or $j(E)=1728$) have rational points of group structure $E(\mathbb F_q)\cong(\mathbb Z/(p\pm 1)\mathbb Z)^2$.
+
+\end{proposition}
+
+\begin{definition}[Isogeny Graph over Supersingular Curves] All supersingular curves defined over $\mathbb F_q$ are isogenic to each other. An \textit{isogeny graph} is an undirected graph that depicts the isogeny relations between different curves over a finite field $\mathbb F_q$. Its vertices consist of the isomorphic classes (or $j$-invariants) of curves, and each edge represents an isogeny (up to automorphisms at the destination curve) with a certain degree $l$ between two curves. For supersingular curves, the graph contains $p/12+O(1)$ vertices, and it's a Ramanujan graph with degree $l+1$.
+\end{definition}

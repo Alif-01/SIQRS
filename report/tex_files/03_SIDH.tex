@@ -1,1 +1,67 @@
-Write Something Here.
+%!TEX root=../main.tex
+
+
+In this section we will introduce the protocol of SIDH (\textit{Supersingular Isogeny Diffie-Hellman}) key-exchange. Its basic idea is to let Alice and Bob individually walk on the isogeny graph, and finally converge to the same vertex. After that, the $j$-invariant of the converged vertex is used as their shared secret-key. For a detailed description, please check \cite{PQCRYPTO:JaoDeFo11}.
+
+\begin{protocol}[SIDH] The protocol of SIDH is stated formally as follows:
+\begin{itemize}
+    \item \textbf{Public parameters: }An prime number $p=2^{e_2}3^{e_3}-1$ and a supersingular curve $E_0$ defined over $\mathbb F_q=\mathbb F_{p^2}$ is fixed. The group structure of that curve is $E_0[\mathbb F_q]\cong (\mathbb Z/2^{e_2}\mathbb Z)^2\times (\mathbb Z/3^{e_3}\mathbb Z)^2$. Find bases $\{P_A,Q_A\},\{P_B,Q_B\}$ that generates the subgroups of order $2^{e_2}$ and $3^{e_3}$ respectively.
+    \item \textbf{Secret parameters: }Both Alice and Bob generate their secret isogeny $\varphi_A:E_0\to E_A$ and $\varphi_B:E_0\to E_B$, composed of $2$-isogenies and $3$-isogenies respectively. The isogenies is represented by their kernels $\Phi_A=\langle[m_A]P_A+[n_A]Q_A\rangle,\Phi_B=\langle[m_B]P_B+[n_B]Q_B\rangle$.
+    \item \textbf{Exchanging: } Alice and Bob exchange the equations of $E_A$ and $E_B$ to each other. Besides, to enable each other compute the successive isogenies, they also reveal some auxiliary points: Alice reveals $\varphi_A(P_B)$ and $\varphi_A(Q_B)$, while Bob reveals $\varphi_B(P_A)$ and $\varphi_B(Q_A)$. From the auxiliary points, they can reconstruct the successive isogenies
+    $$
+    \begin{aligned}
+    \varphi_B'&:E_A\to E_A/\langle[m_B]\varphi_A(P_B)+[n_B]\varphi_A(Q_B)\rangle,\\
+    \varphi_A'&:E_B\to E_B/\langle[m_A]\varphi_B(P_A)+[n_A]\varphi_B(Q_A)\rangle.
+    \end{aligned}
+    $$
+    Then both of $\varphi'_A$ and $\varphi'_B$ point to the same destination curve $E_{AB}=E_0/\langle[m_A]P_A+[n_A]Q_A,[m_B]P_B+[n_B]Q_B\rangle$. The $j$-invariant of $E_{AB}$ is then used as the exchanged secret-key.
+\end{itemize}
+\end{protocol}
+
+Figure 1 shows the commutative diagram of the exchanging process.
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+E_0 \arrow[r] \arrow[dd] & E_A=E_0/\Phi_A \arrow[dd] \\
+& \\
+E_B=E_0/\Phi_B \arrow[r]            & E_{AB}=E_A/\Phi'_B=E_B/\Phi'_A
+\end{tikzcd}
+\caption{Isogeny Diagram}
+\end{figure}
+
+
+Now we briefly give a security reduction relating the protocol to the hardness of 
+appropriate isogeny computation problem. The whole proof is given in \cite{PQCRYPTO:JaoDeFo11}.
+
+\definition {\bf Supersingular Decision Diffie-Hellman (SSDDH) Problem.} Given a tuple sampled with probability 
+$1/2$ from one of the following two distributions:
+
+\begin{itemize}
+  \item ($E_A, E_B, \varphi_A(P_B), \varphi_A(Q_B), \varphi_B(P_A), \varphi_B(Q_A), E_{AB}$), where 
+$E_A, E_B, \varphi_A(P_B), \varphi_A(Q_B), \varphi_B(P_A), \varphi_B(Q_A)$ are as above and 
+
+\begin{align}
+  E_{AB} \cong E_0/ \langle [m_A]P_A+[n_A]Q_A, [m_B]P_B+[n_B]Q_B \rangle
+\end{align}
+
+  \item ($E_A, E_B, \varphi_A(P_B), \varphi_A(Q_B), \varphi_B(P_A), \varphi_B(Q_A), E_{C}$), where 
+$E_A, E_B, \varphi_A(P_B), \varphi_A(Q_B), \varphi_B(P_A), \varphi_B(Q_A)$ are as above and 
+
+\begin{align}
+  E_{AB} \cong E_0/ \langle [m_A']P_A+[n_A']Q_A, [m_B']P_B+[n_B']Q_B \rangle
+\end{align}
+
+where $m_A', n_A'$ (respectively 
+$m_B',n_B'$) are chosen at random from $\mathbb{Z}/2^{e_2}\mathbb{Z}$ (respectively 
+$\mathbb{Z}/3^{e_3}\mathbb{Z}$) and not both divisible by $2$ (respectively 
+$3$).
+
+\end{itemize}
+
+determine from which distribution the tuple is sampled.
+
+\theorem{(SIDH)} Under the SSDDH assumption, the key-agreement protocol is session-key secure 
+in the authenticated-links adversarial model of Canetti and Krawczyk.
+
+The theorem can be proved directly followed the assumption. The proof refers to  \cite{PQCRYPTO:JaoDeFo11}.

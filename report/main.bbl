@@ -1,0 +1,36 @@
+\begin{thebibliography}{CLN16}
+
+\bibitem[BL07]{EFD}
+D.~J. Bernstein and T.~Lange.
+\newblock {\em Explicit-Formulas Database}, 2007.
+\newblock \url{https://www.hyperelliptic.org/EFD/index.html}.
+
+\bibitem[CLN16]{C:CosLonNae16}
+C.~Costello, P.~Longa, and M.~Naehrig.
+\newblock Efficient algorithms for supersingular isogeny {Diffie}-{Hellman}.
+\newblock In {\em CRYPTO~2016, Part~I}, {\em {LNCS}}  9814, pages 572--601.
+  Springer, Heidelberg, August 2016.
+
+\bibitem[DF17]{https://doi.org/10.48550/arxiv.1711.04062}
+L.~De~Feo.
+\newblock Mathematics of isogeny based cryptography, 2017.
+
+\bibitem[Gt12]{Granlund12}
+T.~Granlund and {the GMP development team}.
+\newblock {\em {GNU MP}: {T}he {GNU} {M}ultiple {P}recision {A}rithmetic
+  {L}ibrary}, 5.0.5 edition, 2012.
+\newblock \url{http://gmplib.org/}.
+
+\bibitem[JD11]{PQCRYPTO:JaoDeFo11}
+D.~Jao and L.~{De Feo}.
+\newblock Towards quantum-resistant cryptosystems from supersingular elliptic
+  curve isogenies.
+\newblock In {\em Post-Quantum Cryptography - 4th International Workshop,
+  PQCrypto 2011}, pages 19--34. Springer, Heidelberg, November~/~December 2011.
+
+\bibitem[Sil09]{Silverman}
+J.~Silverman.
+\newblock {\em The Arithmetic of Elliptic Curves}.
+\newblock 01 2009.
+
+\end{thebibliography}
