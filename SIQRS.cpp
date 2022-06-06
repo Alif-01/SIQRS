@@ -10,7 +10,7 @@ int main()
 	cout << "DEBUG on." << endl;
 #endif
     // RunAllTests();
-	run_protocol();
+	while(1) run_protocol();
 
 	return 0;
 }
